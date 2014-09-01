@@ -46,15 +46,16 @@ def getfile(fl):
 				f = open(filename, 'r')
 				line = f.readline()
 				if line[:4] != 'none':
-					sql_in = "INSERT INTO Meta_data (user, uid, feature, longtitude, latitude, time, size ) VALUES (" + line[:-1] +");"
+					queryParams = line[:-1].split("#")
+					sql_in = "INSERT INTO Meta_data (user, uid, feature, longtitude, latitude, time, size,exif ) VALUES (%s,%s,%s,%s,%s,%s,%s,%s);"
 					print "sql_a= " + sql_in
 				#	con, cur = sql_execute(sql_in)
-					cur.execute(sql_in)
+					cur.execute(sql_in,(queryParams[0],queryParams[1],queryParams[2],queryParams[3],queryParams[4],queryParams[5],queryParams[6],queryParams[7]))
 					line = f.readline()
 					while line:
-						sql_in = "INSERT INTO Meta_data (user, uid, feature, longtitude, latitude, time, size ) VALUES (" + line[:-1] +");"
+						sql_in = "INSERT INTO Meta_data (user, uid, feature, longtitude, latitude, time, size,exif ) VALUES (%s,%s,%s,%s,%s,%s,%s,%s);"
 						print "sql_b= " + sql_in
-						cur.execute(sql_in)
+						cur.execute(sql_in,(queryParams[0],queryParams[1],queryParams[2],queryParams[3],queryParams[4],queryParams[5],queryParams[6],queryParams[7]))
 						line = f.readline()
 				#	con.close()
 				f.close()
